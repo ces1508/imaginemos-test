@@ -7,11 +7,15 @@
  */
 
 import React from 'react';
-import 'react-native-gesture-handler'
-import { NavigationContainer, DefaultTheme, DarkTheme  } from '@react-navigation/native'
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
-import { createStackNavigator  } from '@react-navigation/stack'
-import { HomeScreen, MovieDestailScreen } from './src/screens'
+import 'react-native-gesture-handler';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { createStackNavigator } from '@react-navigation/stack';
+import { HomeScreen, MovieDestailScreen } from './src/screens';
 
 const lightTheme = {
   ...DefaultTheme,
@@ -25,8 +29,8 @@ const lightTheme = {
     moviesListBackground: '#fff',
     homeBackground: '#5A79E8',
     secondaryText: 'gray',
-  }
-}
+  },
+};
 
 const darkTheme = {
   ...DarkTheme,
@@ -36,30 +40,24 @@ const darkTheme = {
     background: '#273463',
     moviesListBackground: '#273463',
     secondaryText: 'gray',
-    color: '#fff'
-  }
-}
+    color: '#fff',
+  },
+};
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 const App = () => {
-  const scheme = useColorScheme()
-  const theme = scheme === 'dark' ? darkTheme : lightTheme
+  const scheme = useColorScheme();
+  const theme = scheme === 'dark' ? darkTheme : lightTheme;
   return (
     <AppearanceProvider>
       <NavigationContainer theme={theme}>
-        <Stack.Navigator headerMode='none'>
-          <Stack.Screen
-            name='Home'
-            component={HomeScreen}
-          />
-          <Stack.Screen
-            name='MovieDetail'
-            component={MovieDestailScreen}
-          />
+        <Stack.Navigator headerMode="none">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="MovieDetail" component={MovieDestailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>
-  )
-}
+  );
+};
 
 export default App;
