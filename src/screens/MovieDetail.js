@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { MovieBanner, Cast, MovieInfoRow } from '../components';
+import { useThemoviedb } from '../hooks/useFetch'
 const actors = [
   {
     name: 'Jason Momoa',
@@ -23,6 +24,23 @@ const actors = [
 
 const MovieDetailScreen = ({ route }) => {
   const { id, name, image } = route.params;
+  const [details, setDetails] = useState({});
+  const { data, loading, error } = useThemoviedb(
+    'GET',
+    `/movie/${id}?api_key=383aa7b32e999f489cc02ec4cdfa3c24&language=en-US`
+  );
+
+  useEffect(() => {
+    if (!loading && !error) {
+      setDetails({
+        description: data.overview,
+        genres: data.genres.map((genre) => genre.name).join(''),
+        studios: data.production_companies.map((pc) => pc.name).join(''),
+        release: data.release_date,
+      });
+    }
+  }, [data, loading, error]);
+
   return (
     <ScrollView>
       <MovieBanner image={image} />
@@ -32,21 +50,20 @@ const MovieDetailScreen = ({ route }) => {
           <Text>Hello</Text>
           <Text>{id}</Text>
         </View>
-        <Text style={styles.description}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum
-        </Text>
-        <Cast list={actors} />
-        <MovieInfoRow title="Studio" value="warner bros" />
-        <MovieInfoRow title="genre" value="action, adventure, Fantasy" />
-        <MovieInfoRow title="release" value="2018" />
+        {Object.keys(details).length > 0 ? (
+          <>
+            <Text style={styles.description}>{details.description}</Text>
+            <Cast list={actors} />
+            <MovieInfoRow title="Studios" value={details.studios} />
+            <MovieInfoRow title="genres" value={details.genres} />
+            <MovieInfoRow
+              title="release"
+              value={details.release.split('-')[0]}
+            />
+          </>
+        ) : (
+          <Text>loading</Text>
+        )}
       </View>
     </ScrollView>
   );

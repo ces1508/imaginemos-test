@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const initialState = {
-  data: [],
+  data: null,
   loading: true,
   error: false,
 };
@@ -25,14 +25,13 @@ export const useThemoviedb = (method = 'GET', endpoint, data = {}) => {
       fetch(`${API_URI}${endpoint}`, { ...requestOptions })
         .then((res) => res.json())
         .then((jsonData) => {
-          setState((state) => ({ ...state, data: jsonData }));
+          console.log(jsonData);
+          setState((state) => ({ ...state, data: jsonData, loading: false }));
         })
         .catch((e) => {
-          setState((state) => ({ ...state, error: e.message }));
+          console.error(e.stack);
+          setState((state) => ({ ...state, error: e.message, loading: false }));
         })
-        .finally(() => {
-          setState((state) => ({ ...state, loading: false }));
-        });
     };
     makeRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
