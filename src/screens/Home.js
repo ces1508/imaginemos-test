@@ -10,6 +10,7 @@ import {
   SearchHeader
 } from '../components'
 
+import { useTheme } from '@react-navigation/native'
 const films = [
   {
     section: 'Recomended For You',
@@ -78,10 +79,10 @@ const films = [
 ]
 
 const HomeScreen = () => {
-
+  const { colors } = useTheme()
   const List = () => (
     <FlatList
-      style={styles.filmsList}
+      style={[styles.filmsList, { backgroundColor: colors.moviesListBackground }]}
       keyExtractor={(item) => item.section}
       data={films}
       renderItem={({ item }) => (
@@ -94,7 +95,7 @@ const HomeScreen = () => {
   )
 
   return (
-    <View>
+    <View style={styles.screen}>
       <SearchHeader />
       <List />
     </View>
@@ -102,9 +103,13 @@ const HomeScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#5A79E8'
+  },
   filmsList: {
-    borderRadius: 20,
-    backgroundColor: 'red',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     padding: 20
   }
 })

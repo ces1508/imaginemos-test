@@ -4,22 +4,30 @@ import {
   View,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 
-const Movie = ({ id, name, image, score }) => (
-  <View style={styles.card}>
-    <Image
-      source={{ uri: image }}
-      style={styles.image}></Image>
-    <Text
-      numberOfLines={1}
-      style={styles.name}>
-      {name}
-    </Text>
-    <Text>{score}/5</Text>
-  </View>
-)
+const Movie = ({ id, name, image, score }) => {
+  const { colors } = useTheme()
+  const navigation = useNavigation()
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate('MovieDetail', { id, name, image })}>
+      <View style={styles.card}>
+        <Image
+          source={{ uri: image }}
+          style={styles.image}></Image>
+        <Text
+          numberOfLines={1}
+          style={[styles.name], { color: colors.text }}>
+          {name}
+        </Text>
+        <Text>{score}/5</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
 
 Movie.propTypes = {
   id: PropTypes.number.isRequired,

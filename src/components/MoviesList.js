@@ -7,21 +7,25 @@ import {
   StyleSheet
 } from 'react-native'
 import Movie from './Movie'
-const MoviestList = ({ data, section }) => (
-  <View style={styles.wrapper}>
-    <Text
-      numberOfLines={1}
-      style={styles.sectionName}>
-      {section}
-    </Text>
-    <FlatList
-      keyExtractor={(item) => item.id}
-      horizontal={true}
-      data={data}
-      renderItem={({ item }) => <Movie {...item} />}
-    />
-  </View>
-)
+import { useTheme } from '@react-navigation/native'
+const MoviestList = ({ data, section }) => {
+  const { colors } = useTheme()
+  return (
+    <View style={styles.wrapper}>
+      <Text
+        numberOfLines={1}
+        style={[styles.sectionName, { color: colors.text }]}>
+        {section}
+      </Text>
+      <FlatList
+        keyExtractor={(item) => item.id}
+        horizontal={true}
+        data={data}
+        renderItem={({ item }) => <Movie {...item} />}
+      />
+    </View>
+  )
+  }
 
 MoviestList.propTypes = {
   section: PropTypes.string.isRequired,
@@ -39,7 +43,8 @@ const styles = new StyleSheet.create({
   },
   sectionName: {
     fontSize: 17,
-    marginBottom: 10
+    marginBottom: 10,
+    textTransform: 'capitalize'
   }
 })
 
