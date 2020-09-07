@@ -31,7 +31,7 @@ const MoviestList = ({ section, path }) => {
         {section}
       </Text>
       <FlatList
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         horizontal={true}
         data={movies}
         renderItem={({item}) => <Movie {...item} />}

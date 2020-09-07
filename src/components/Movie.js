@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation, useTheme } from '@react-navigation/native';
+import Rating from './Rating'
 
 const Movie = ({ id, name, image, score }) => {
   const { colors } = useTheme();
@@ -14,7 +15,7 @@ const Movie = ({ id, name, image, score }) => {
         <Text numberOfLines={1} style={([styles.name], { color: colors.text })}>
           {name}
         </Text>
-        <Text>{score}/5</Text>
+        <Rating score={score} />
       </View>
     </TouchableOpacity>
   );

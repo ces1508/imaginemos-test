@@ -21,17 +21,16 @@ export const useThemoviedb = (method = 'GET', endpoint, data = {}) => {
       ) {
         requestOptions.body = data;
       }
-      console.log(`${API_URI}/${endpoint}`);
       fetch(`${API_URI}${endpoint}`, { ...requestOptions })
         .then((res) => res.json())
         .then((jsonData) => {
-          console.log(jsonData);
+          // eslint-disable-next-line no-shadow
           setState((state) => ({ ...state, data: jsonData, loading: false }));
         })
         .catch((e) => {
-          console.error(e.stack);
+          // eslint-disable-next-line no-shadow
           setState((state) => ({ ...state, error: e.message, loading: false }));
-        })
+        });
     };
     makeRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps

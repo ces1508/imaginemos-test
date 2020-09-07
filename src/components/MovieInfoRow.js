@@ -7,7 +7,9 @@ const MovieInfoRow = ({ title, value }) => {
   return (
     <View style={styles.container}>
       <Text style={[styles.title, colorStyle]}>{title}</Text>
-      <Text style={colorStyle}>{value}</Text>
+      <Text numberOfLines={1} style={colorStyle}>
+        {value}
+      </Text>
     </View>
   );
 };
