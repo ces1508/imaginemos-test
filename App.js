@@ -13,6 +13,7 @@ import {
   DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen, MovieDestailScreen } from './src/screens';
@@ -37,8 +38,8 @@ const darkTheme = {
   colors: {
     ...DarkTheme.colors,
     homeBackground: '#5A79E8',
-    background: '#273463',
-    moviesListBackground: '#273463',
+    background: '#283546',
+    moviesListBackground: '#283546',
     secondaryText: 'gray',
     color: '#fff',
   },
@@ -50,6 +51,10 @@ const App = () => {
   const theme = scheme === 'dark' ? darkTheme : lightTheme;
   return (
     <AppearanceProvider>
+      <StatusBar
+        animated
+        barStyle={scheme === 'dark' ? 'dark-content' : 'light-content'}
+      />
       <NavigationContainer theme={theme}>
         <Stack.Navigator headerMode="none">
           <Stack.Screen name="Home" component={HomeScreen} />

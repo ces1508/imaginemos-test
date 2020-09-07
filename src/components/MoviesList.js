@@ -25,12 +25,16 @@ const MoviestList = ({ section, path }) => {
   const {colors} = useTheme();
   return (
     <View style={styles.wrapper}>
-      <Text
-        numberOfLines={1}
-        style={[styles.sectionName, {color: colors.text}]}>
-        {section}
-      </Text>
+      <View style={styles.row}>
+        <Text
+          numberOfLines={1}
+          style={[styles.sectionName, {color: colors.text}]}>
+          {section}
+        </Text>
+        <Text style={styles.text}>see all</Text>
+      </View>
       <FlatList
+        style={styles.list}
         keyExtractor={(item) => item.id.toString()}
         horizontal={true}
         data={movies}
@@ -53,6 +57,17 @@ const styles = new StyleSheet.create({
     fontSize: 17,
     marginBottom: 10,
     textTransform: 'capitalize',
+  },
+  list: {
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  text: {
+    color: '#707884',
+    fontSize: 14,
   }
 });
 

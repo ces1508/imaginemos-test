@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { MovieBanner, Cast, MovieInfoRow } from '../components';
+import { MovieBanner, Cast, MovieInfoRow, Rating } from '../components';
 import { useThemoviedb } from '../hooks/useFetch';
+import { useTheme } from '@react-navigation/native';
 
 const MovieDetailScreen = ({ route, navigation }) => {
-  const { id, name, image } = route.params;
+  const { id, name, image, score } = route.params;
   const [details, setDetails] = useState({});
+  const { colors } = useTheme();
   const { data, loading, error } = useThemoviedb(
     'GET',
     `/movie/${id}?api_key=383aa7b32e999f489cc02ec4cdfa3c24&language=en-US`
@@ -36,10 +38,10 @@ const MovieDetailScreen = ({ route, navigation }) => {
         <Icon name="heart-outline" size={20} style={styles.icon} />
       </View>
       <View style={styles.informationWrapper}>
-        <View>
-          <Text>{name}</Text>
-          <Text>Hello</Text>
-          <Text>{id}</Text>
+        <Text style={{ ...styles.title, color: colors.text }}>{name}</Text>
+        <View style={styles.row}>
+          <Text style={styles.watchButton}>watch now</Text>
+          <Rating score={score} />
         </View>
         {Object.keys(details).length > 0 ? (
           <>
@@ -63,9 +65,12 @@ const MovieDetailScreen = ({ route, navigation }) => {
 const styles = new StyleSheet.create({
   informationWrapper: {
     paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   description: {
     color: 'gray',
+    lineHeight: 25,
+    fontSize: 16,
   },
   navigationBar: {
     position: 'absolute',
@@ -79,12 +84,34 @@ const styles = new StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  watchButton: {
+    backgroundColor: '#6B7380',
+    color: '#fff',
+    textTransform: 'uppercase',
+    borderRadius: 20,
+    padding: 10,
+    width: 120,
+    fontSize: 12,
+    textAlign: 'center',
+  },
   icon: {
     height: 60,
     textAlignVertical: 'center',
     width: 80,
     textAlign: 'center',
     color: '#fff',
+  },
+  title: {
+    paddingTop: 20,
+    paddingBottom: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

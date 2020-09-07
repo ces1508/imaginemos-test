@@ -35,8 +35,8 @@ Rating.propTypes = {
 Rating.defaultProps = {
   score: 5,
   iconSize: 15,
-  iconSelectColor: 'yellow',
-  iconUnSelectedColor: 'gray',
+  iconSelectColor: '#FED601',
+  iconUnSelectedColor: '#535438',
 };
 
 const styles = StyleSheet.create({
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   icon: {
-    marginRight: 4,
+    marginRight: 2,
   },
 });
 
